@@ -1,0 +1,132 @@
+Loaded songs: 10
+
+=== High-Energy Pop ===
+Preferences: {'genre': 'pop', 'mood': 'happy', 'energy': 0.9}
+
+1. Sunrise City by Neon Echo  [pop/happy]  score 3.92
+     - genre match (+2.0)
+     - mood match (+1.0)
+     - energy closeness (+0.92)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+2. Gym Hero by Max Pulse  [pop/intense]  score 2.97
+     - genre match (+2.0)
+     - energy closeness (+0.97)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+3. Rooftop Lights by Indigo Parade  [indie pop/happy]  score 1.86
+     - mood match (+1.0)
+     - energy closeness (+0.86)
+     > Indie pop mixes melodic pop writing with a softer, more personal sound. Moderate energy, often happy or reflective.
+4. Storm Runner by Voltline  [rock/intense]  score 0.99
+     - energy closeness (+0.99)
+     > Rock centers on guitars, drums and driving rhythm. Typically high energy and intense, suited to workouts and loud, energetic moods.
+5. Night Drive Loop by Neon Echo  [synthwave/moody]  score 0.85
+     - energy closeness (+0.85)
+     > Synthwave blends retro synthesizers with steady driving beats. Moderate to high energy with a nostalgic, moody or focused feel, good for night drives.
+
+Confidence: 0.97
+Self-critique flags: artist_repeat: the same artist appears more than once
+
+=== Chill Lofi ===
+Preferences: {'genre': 'lofi', 'mood': 'chill', 'energy': 0.35}
+
+1. Library Rain by Paper Lanterns  [lofi/chill]  score 4.00
+     - genre match (+2.0)
+     - mood match (+1.0)
+     - energy closeness (+1.00)
+     > Lofi uses mellow beats, warm textures and low tempo. Popular for studying, focus and relaxing because it is calm and unobtrusive with low energy.
+2. Midnight Coding by LoRoom  [lofi/chill]  score 3.93
+     - genre match (+2.0)
+     - mood match (+1.0)
+     - energy closeness (+0.93)
+     > Lofi uses mellow beats, warm textures and low tempo. Popular for studying, focus and relaxing because it is calm and unobtrusive with low energy.
+3. Focus Flow by LoRoom  [lofi/focused]  score 2.95
+     - genre match (+2.0)
+     - energy closeness (+0.95)
+     > Lofi uses mellow beats, warm textures and low tempo. Popular for studying, focus and relaxing because it is calm and unobtrusive with low energy.
+4. Spacewalk Thoughts by Orbit Bloom  [ambient/chill]  score 1.93
+     - mood match (+1.0)
+     - energy closeness (+0.93)
+     > Ambient music is slow, atmospheric and mostly beatless. Very low energy, used for relaxing, sleep and deep calm.
+5. Coffee Shop Stories by Slow Stereo  [jazz/relaxed]  score 0.98
+     - energy closeness (+0.98)
+     > Jazz features improvisation, swing and rich harmony. Usually relaxed to moderate energy, suited to chill evenings and a sophisticated, relaxed mood.
+
+Confidence: 0.72
+Self-critique flags: artist_repeat: the same artist appears more than once
+
+=== Deep Intense Rock ===
+Preferences: {'genre': 'rock', 'mood': 'intense', 'energy': 0.95}
+
+1. Storm Runner by Voltline  [rock/intense]  score 3.96
+     - genre match (+2.0)
+     - mood match (+1.0)
+     - energy closeness (+0.96)
+     > Rock centers on guitars, drums and driving rhythm. Typically high energy and intense, suited to workouts and loud, energetic moods.
+2. Gym Hero by Max Pulse  [pop/intense]  score 1.98
+     - mood match (+1.0)
+     - energy closeness (+0.98)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+3. Sunrise City by Neon Echo  [pop/happy]  score 0.87
+     - energy closeness (+0.87)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+4. Rooftop Lights by Indigo Parade  [indie pop/happy]  score 0.81
+     - energy closeness (+0.81)
+     > Indie pop mixes melodic pop writing with a softer, more personal sound. Moderate energy, often happy or reflective.
+5. Night Drive Loop by Neon Echo  [synthwave/moody]  score 0.80
+     - energy closeness (+0.80)
+     > Synthwave blends retro synthesizers with steady driving beats. Moderate to high energy with a nostalgic, moody or focused feel, good for night drives.
+
+Confidence: 0.99
+Self-critique flags: artist_repeat: the same artist appears more than once
+
+=== Conflicted (High Energy + Sad) ===
+Preferences: {'genre': 'pop', 'mood': 'sad', 'energy': 0.9}
+
+1. Gym Hero by Max Pulse  [pop/intense]  score 2.97
+     - genre match (+2.0)
+     - energy closeness (+0.97)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+2. Sunrise City by Neon Echo  [pop/happy]  score 2.92
+     - genre match (+2.0)
+     - energy closeness (+0.92)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+3. Storm Runner by Voltline  [rock/intense]  score 0.99
+     - energy closeness (+0.99)
+     > Rock centers on guitars, drums and driving rhythm. Typically high energy and intense, suited to workouts and loud, energetic moods.
+4. Rooftop Lights by Indigo Parade  [indie pop/happy]  score 0.86
+     - energy closeness (+0.86)
+     > Indie pop mixes melodic pop writing with a softer, more personal sound. Moderate energy, often happy or reflective.
+5. Night Drive Loop by Neon Echo  [synthwave/moody]  score 0.85
+     - energy closeness (+0.85)
+     > Synthwave blends retro synthesizers with steady driving beats. Moderate to high energy with a nostalgic, moody or focused feel, good for night drives.
+
+Confidence: 0.43
+Input warnings: Mood 'sad' is not in the catalog (known: ['chill', 'focused', 'happy', 'intense', 'moody', 'relaxed']).
+Self-critique flags: artist_repeat: the same artist appears more than once | input_outside_catalog: requested genre/mood does not exist in the data
+HUMAN REVIEW REQUESTED: confidence or input quality is too low to trust automatically.
+
+=== Unknown Genre (K-Pop) ===
+Preferences: {'genre': 'k-pop', 'mood': 'happy', 'energy': 0.7}
+
+1. Rooftop Lights by Indigo Parade  [indie pop/happy]  score 1.94
+     - mood match (+1.0)
+     - energy closeness (+0.94)
+     > Indie pop mixes melodic pop writing with a softer, more personal sound. Moderate energy, often happy or reflective.
+2. Sunrise City by Neon Echo  [pop/happy]  score 1.88
+     - mood match (+1.0)
+     - energy closeness (+0.88)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+3. Night Drive Loop by Neon Echo  [synthwave/moody]  score 0.95
+     - energy closeness (+0.95)
+     > Synthwave blends retro synthesizers with steady driving beats. Moderate to high energy with a nostalgic, moody or focused feel, good for night drives.
+4. Storm Runner by Voltline  [rock/intense]  score 0.79
+     - energy closeness (+0.79)
+     > Rock centers on guitars, drums and driving rhythm. Typically high energy and intense, suited to workouts and loud, energetic moods.
+5. Gym Hero by Max Pulse  [pop/intense]  score 0.77
+     - energy closeness (+0.77)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy. Suits listeners who want familiar, high-energy, feel-good tracks.
+
+Confidence: 0.26
+Input warnings: Genre 'k-pop' is not in the catalog (known: ['ambient', 'indie pop', 'jazz', 'lofi', 'pop', 'rock', 'synthwave']).
+Self-critique flags: weak_match: best score is under half of the maximum | artist_repeat: the same artist appears more than once | input_outside_catalog: requested genre/mood does not exist in the data
+HUMAN REVIEW REQUESTED: confidence or input quality is too low to trust automatically.

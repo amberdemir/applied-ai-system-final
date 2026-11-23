@@ -9,7 +9,8 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
-from src.recommender import load_songs, recommend_songs, catalog_warnings, is_weak_match
+from src.applied_system import format_report, run
+from src.recommender import load_songs
 
 
 PROFILES = {
@@ -29,21 +30,9 @@ def main() -> None:
 
     for profile_name, user_prefs in PROFILES.items():
         print(f"\n=== {profile_name} ===")
-        print(f"Preferences: {user_prefs}")
-        for warning in catalog_warnings(user_prefs, songs):
-            print(warning)
-
-        recommendations = recommend_songs(user_prefs, songs, k=5)
-        print("\nTop recommendations:\n")
-        for rank, (song, score, reasons) in enumerate(recommendations, start=1):
-            print(f"{rank}. {song['title']}")
-            print(f"   Score: {score:.2f}")
-            print("   Reasons:")
-            for reason in reasons:
-                print(f"     - {reason}")
-            if is_weak_match(user_prefs, song):
-                print("   Weak match: only energy lined up")
-            print()
+        print(f"Preferences: {user_prefs}\n")
+        report = run(user_prefs, songs, k=5)
+        print(format_report(report))
 
 if __name__ == "__main__":
     main()
