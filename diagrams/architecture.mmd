@@ -1,0 +1,14 @@
+flowchart LR
+    U[User preferences] --> G[1. Guardrails<br/>validate and repair input]
+    G --> R[2. Recommender<br/>score_song + recommend_songs]
+    R --> RAG[3. RAG retrieval<br/>why this genre/mood fits]
+    RAG --> C[4. Confidence score 0-1]
+    C --> S[5. Self-critique<br/>bubble, tie, weak match]
+    S --> H{6. Confidence low or<br/>input outside catalog?}
+    H -- yes --> HU[Human review requested]
+    H -- no --> OUT[Ranked list + reasons + evidence]
+    HU --> OUT
+    G -.-> L[(logs/system.log)]
+    S -.-> L
+    KB[(Knowledge base<br/>src/rag.py)] -.-> RAG
+    D[(data/songs.csv)] -.-> R

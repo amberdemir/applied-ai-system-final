@@ -1,0 +1,12 @@
+Case                                         Result  Conf  Expectation
+--------------------------------------------------------------------------------------------------------------
+Typical pop fan                              PASS    1.00  pop/happy song ranked first, no human review
+Typical lofi studier                         PASS    0.72  lofi song ranked first, no human review
+Genre missing from catalog                   PASS    0.22  warning raised and human review requested
+Energy out of range (1.7)                    PASS    0.88  energy clamped with a warning, system still returns results
+Energy is text                               PASS    0.74  falls back to 0.5 with a warning, no crash
+Empty preferences                            PASS    0.00  three warnings, lower confidence, no crash
+Conflicting taste (calm genre, max energy)   PASS    0.77  retrieval flags the energy as atypical for ambient and requests human review
+Oversized k (500)                            PASS    0.90  k reduced to catalog size with a warning
+--------------------------------------------------------------------------------------------------------------
+8/8 reliability checks passed.
