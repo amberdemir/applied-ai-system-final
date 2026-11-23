@@ -1,5 +1,9 @@
 # 🎵 Music Recommender Simulation
 
+> **Applied AI System (final project).** This repo extends my Module 3 *Music Recommender Simulation* with
+> input guardrails, retrieval, confidence scoring, self-critique and human review. The original project is
+> described first; the **Applied AI System** section below covers the extension.
+
 ## Project Summary
 
 In this project you will build and explain a small music recommender system.
@@ -12,6 +16,7 @@ Your goal is to:
 - Reflect on how this mirrors real world AI recommenders
 
 This is a content-based music recommender. It scores every song in a small CSV catalog against a user's favorite genre, mood, and target energy, then ranks the songs and explains each recommendation with the points behind it. It runs from the command line
+
 ---
 
 ## How The System Works
@@ -55,6 +60,7 @@ lowest score, and the top 5 are shown to the user.
    python -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+   ```
 
 2. Install dependencies
 
@@ -70,10 +76,10 @@ python -m src.main
 
 ### Running Tests
 
-Run the starter tests with:
+Run the tests with:
 
 ```bash
-pytest
+python -m pytest
 ```
 
 You can add more tests in `tests/test_recommender.py`.
@@ -141,6 +147,7 @@ Top recommendations:
 This project showed me that a recommender turns data into a prediction by adding up points. Each song's score is just its genre points, plus its mood points, plus how close its energy is to what the user wants. The highest totals become the recommendations. Showing the reasons next to each song made this easy to see, because every point can be traced back to where it came from.
 
 It also showed me where bias can sneak in. Genre is worth the most points, so a song in the "right" genre can beat a better-fitting song from a different genre. That can favor popular genres and bury good songs from others. A tiny catalog makes this worse: with only one rock song, a rock fan mostly gets songs that just happen to have the right energy. For more detail, see the [Model Card](model_card.md).
+
 ---
 
 # Applied AI System: Trustworthy Music Recommender
@@ -219,7 +226,7 @@ Run:
 ```bash
 python -m src.applied_system                               # end-to-end demo, 4 profiles
 python -m src.evaluate                                     # reliability experiment table
-python -m pytest                                           # 18 tests
+python -m pytest                                           # 20 tests
 python -m src.evaluate > assets/evaluation_output.txt      # save evidence as a text log
 ```
 
@@ -292,7 +299,7 @@ HUMAN REVIEW REQUESTED: confidence or input quality is too low to trust automati
 
 ## Testing summary
 
-18 of 18 automated tests pass, and the 8-profile experiment passes 8 of 8.
+20 of 20 automated tests pass (2 from the original project plus 18 new), and the 8-profile experiment passes 8 of 8.
 
 ```
 Case                                         Result  Conf  Expectation
@@ -315,7 +322,7 @@ contradictory request (calm genre, maximum energy) scored 0.87 and was trusted. 
 confidence score built only from match strength can be confidently wrong, so it needs outside knowledge to
 check whether the request itself makes sense.
 
-## Reflection
+## Reflection on the applied AI system
 
 This project taught me that building the model is only half the work. The harder half is deciding when to
 trust it. Adding guardrails, a confidence score and a human-review path changed the system more than any
@@ -326,4 +333,56 @@ trigger a review is part of the system's reasoning.
 **Portfolio note:** this project shows that I design AI systems around reliability, with testing, logging
 and human oversight built in from the start, and that I measure behavior with evidence instead of assuming it.
 
-Loom walkthrough (optional): *paste link here*
+---
+
+## Run the original profiles through the full pipeline
+
+`python -m src.main` runs the five test profiles from the original project through the new pipeline
+(guardrails, recommender, retrieval, confidence, self-critique, human review). The output is saved in
+[`assets/main_output.txt`](assets/main_output.txt).
+
+```
+$ python -m src.main
+Loaded songs: 10
+
+=== High-Energy Pop ===
+Preferences: {'genre': 'pop', 'mood': 'happy', 'energy': 0.9}
+
+1. Sunrise City by Neon Echo  [pop/happy]  score 3.92
+     - genre match (+2.0)
+     - mood match (+1.0)
+     - energy closeness (+0.92)
+     > Pop music favors catchy hooks, polished production and upbeat, danceable energy...
+...
+Confidence: 0.97
+Self-critique flags: artist_repeat: the same artist appears more than once
+```
+
+A mood that does not exist in the catalog is caught and sent for human review:
+
+```
+=== Conflicted (High Energy + Sad) ===
+Preferences: {'genre': 'pop', 'mood': 'sad', 'energy': 0.9}
+...
+Confidence: 0.43
+Input warnings: Mood 'sad' is not in the catalog (known: ['chill', 'focused', 'happy', 'intense', 'moody', 'relaxed']).
+Self-critique flags: artist_repeat: the same artist appears more than once | input_outside_catalog: requested genre/mood does not exist in the data
+HUMAN REVIEW REQUESTED: confidence or input quality is too low to trust automatically.
+```
+
+So is a genre that does not exist:
+
+```
+=== Unknown Genre (K-Pop) ===
+Preferences: {'genre': 'k-pop', 'mood': 'happy', 'energy': 0.7}
+...
+Confidence: 0.26
+Input warnings: Genre 'k-pop' is not in the catalog (known: ['ambient', 'indie pop', 'jazz', 'lofi', 'pop', 'rock', 'synthwave']).
+Self-critique flags: weak_match: best score is under half of the maximum | artist_repeat: the same artist appears more than once | input_outside_catalog: requested genre/mood does not exist in the data
+HUMAN REVIEW REQUESTED: confidence or input quality is too low to trust automatically.
+```
+
+The three normal profiles (High-Energy Pop 0.97, Chill Lofi 0.72, Deep Intense Rock 0.99) are not flagged,
+while the two edge cases (0.43 and 0.26) are, which is the behavior the reliability tests check for.
+
+Loom walkthrough (optional): *add link here*
