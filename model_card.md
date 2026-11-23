@@ -331,4 +331,79 @@ AI helped me a lot. It wrote the scoring and ranking code, fixed my crash, and r
 
 I was surprised that just three rules (genre, mood, and energy) could produce results that really felt like recommendations. Chill Lofi gave calm lofi songs, and the pop fan got upbeat pop. I was also surprised that Gym Hero kept showing up for happy pop fans even though its mood is "intense," because the genre match and high energy outweighed the mood. And when I doubled the energy weight, nothing changed at all, because genre and energy line up in a tiny catalog.
 
-Next, I would add more songs so the catalog isn't so small, and use features like tempo, valence, and danceability. I would also treat "indie pop" as close to "pop" instead of a totally different genre, and add variety to the top 5 so it isn't the same kind of song five times.
+Next, I would add more songs so the catalog isn't so small, and use features like tempo, valence, and danceability. I would also treat "indie pop" as close to "pop" instead of a totally different genre, and add variety to the top 5 so it isn't the same kind of song five times.---
+
+# Applied AI System: Model Card Additions
+
+## System overview
+
+**Name:** Trustworthy Music Recommender (extension of the Module 3 Music Recommender Simulation)
+**Type:** Rule-based recommender with guardrails, retrieval (RAG), confidence scoring, self-critique and a
+human-review flag.
+**Intended use:** Suggest songs from a small catalog and say how much the suggestion can be trusted.
+**Not intended for:** Real music services, large catalogs, or any decision that affects people's livelihoods.
+
+## Limitations and biases
+
+- **Filter bubble.** An exact genre match is worth the most points, so songs in the requested genre crowd out
+  good songs from neighboring genres. The self-critique flags this but does not change the ranking.
+- **Tiny catalog.** With about ten songs, some genres have one track, so "top 5" often includes poor matches.
+  Confidence drops when this happens, which is intended.
+- **Narrow knowledge base.** Retrieval only covers a handful of genres and moods. For any other genre the system
+  has no opinion and says nothing, so unusual or non-Western genres get weaker checks.
+- **Keyword retrieval.** Matching is by word overlap, not meaning, so unusual phrasing can miss.
+- **Confidence is a heuristic, not a probability.** A score of 0.72 does not mean 72% likely to be liked.
+- **Cultural bias.** The genre and mood labels, energy ranges and descriptions reflect mainstream Western
+  categories, and a person's taste may not fit them.
+
+## Could the AI be misused, and how is that prevented?
+
+- **Misuse risk:** Low stakes overall. The main risks are treating a confident-sounding score as proof of
+  quality, and using a narrow catalog to push certain artists or genres to users.
+- **Prevention built in:** every repair to user input is reported, never silent; low-trust answers are flagged
+  for a human instead of being presented as confident; retrieved notes are shown as evidence so users can
+  check them; every run is logged so a reviewer can audit what happened.
+- **Prevention still needed in a real product:** diversity re-ranking so one genre or artist cannot dominate,
+  and disclosure of how ranking works.
+
+## What surprised me while testing reliability
+
+Before retrieval drove a decision, a contradictory request (ambient music at maximum energy) scored a
+confidence of 0.87 and was trusted automatically. The score formula only measured how well a song matched, not
+whether the request made sense. Adding retrieved energy ranges lowered that case to 0.77 and triggered human
+review.
+
+## Testing results
+
+18 of 18 automated tests pass; the 8-profile experiment passes 8 of 8.
+
+| Test input | Evaluation criteria | Confidence | Result |
+|---|---|---|---|
+| Pop, happy, energy 0.8 | Pop song first, no review | 1.00 | Pass |
+| Lofi, chill, energy 0.35 | Lofi song first, no review | 0.72 | Pass |
+| Classical, happy (not in catalog) | Warn and request review | 0.22 | Pass |
+| Energy 1.7 | Clamp with warning, still return results | 0.88 | Pass |
+| Energy "very loud" (text) | Fall back to 0.5 with warning, no crash | 0.74 | Pass |
+| Empty preferences | Three warnings, no crash | 0.00 | Pass |
+| Ambient at energy 1.0 | Retrieval flags atypical energy, request review | 0.77 | Pass |
+| k = 500 | Reduce to catalog size with warning | 0.90 | Pass |
+
+Reproduce with `python -m src.evaluate` and `python -m pytest`.
+
+## AI collaboration
+
+**How I used AI.** I used an AI assistant to help brainstorm the pipeline design (guardrails, retrieval,
+confidence, self-critique, human review), draft code and tests, and review my approach. I decided which
+extension to build and checked the results by running the tests and the evaluation script myself.
+
+**A suggestion I accepted.** The assistant suggested repairing bad input (for example clamping an energy of
+1.7 to 1.0) and reporting a warning, instead of rejecting the request. I accepted it because the user still
+gets an answer and every change is visible, and I confirmed it with tests that check each warning appears.
+
+**A suggestion I changed.** The first design only printed the retrieved notes next to each recommendation.
+Because the project requires the AI feature to change how the system behaves, I changed it so the retrieved
+energy range for the requested genre drives a decision: a mismatch lowers confidence and triggers human review.
+I verified the change with a before/after test (same genre, calm versus loud energy, different review result).
+
+**What I checked myself.** I ran the full test suite, read the outputs for each demo profile, and confirmed
+that confidence ordering made sense (bad input scored lower than good input).
